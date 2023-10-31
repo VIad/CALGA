@@ -22,7 +22,7 @@ The results of our evaluation offer valuable insights into the strengths and wea
 ## Introduction
 This project is inspired by [@Kyosek/text-generator-Krisko](https://github.com/kyosek/text-generator-Krisko)
 
-Popfolk, a distinctive and influential music genre in Bulgaria, has captivated audiences with its unique blend of traditional Bulgarian folk elements and modern pop sensibilities. Rooted in the rich cultural heritage of Bulgaria, popfolk has evolved into a dynamic and popular genre over the years, celebrated for its fusion of traditional melodies with contemporary styles. In this introductory exploration, we delve into the world of Bulgarian popfolk, its historical context, famous artists, and its enduring impact on the country's music scene.
+Popfolk, a distinctive and influential music genre in Bulgaria, has captivated audiences with its unique blend of traditional Bulgarian folk elements and modern pop sensibilities. Rooted in the rich cultural heritage of Bulgaria, popfolk has evolved into a dynamic and popular genre over the years, celebrated for its fusion of traditional melodies with contemporary styles.
 
 It is futile to attempt to statistically model what takes great creativity and lyrical craftsmanship. The task of generating coherent Bulgarian pop-folk lyrics is incredibly complex, mainly because of their varying rhyme structures (**ABABBCBC**), **(BCBC)**
 and because of the numerous Phraseme and genre-unique word semantics.
