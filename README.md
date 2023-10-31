@@ -44,13 +44,16 @@ We get all songs and analyze the 15 most frequently occuring artists:
 
 In Bulgarian pop-folk, duets are common, (>10% of songs).
 Therefore it is interesting to know how many songs are duets, trios, quartets.. etc:
+
 ![enter image description here](https://i.imgur.com/ZYvlo0n.png)
 
 The most commonly occuring words in Bulgarian pop-folk (minus [stopwords](https://www.opinosis-analytics.com/knowledge-base/stop-words-explained/)) are:
+
 ![enter image description here](https://i.imgur.com/Mo6bphf.png)
 ![enter image description here](https://i.imgur.com/4IEiHSs.png)
 
 Histogram, plotting the frequency of song lengths
+
 ![enter image description here](https://i.imgur.com/ATmk6EB.png)
 
 An unprocessed training example:
@@ -103,8 +106,11 @@ This means that if we have a sentence like
 it will be n-gramified like so:
 
 *The quick brown fox jumps over*
+
 *quick brown fox jumps over the*
+
 *brown fox jumps over the lazy*
+
 *fox jumps over the lazy dog*
 
 
@@ -120,17 +126,22 @@ The left part is the transformer encoder and the right part is the transformer d
 
 The architecture uses attention, and the values from the encoder are fed into the decoder via the equation for **cross-attention**:
 
-$$ Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})V$$
+$$ Attention(Q, K, V) = softmax(\frac{QK^T}{\sqrt{d_k}})V $$
+
 In this equation, the **Q** and **K** (Queries and Key) values come from the encoder and decoder, respectively.
 
 In our case, we won't be translating sequences, only generating them and therefore will only use the decoder part of the transformer.
 
 So, instead of cross-attention, we'll utilize **self-attention**. We'll pass the **Q** value again, instead of a **K** value, so the algorithm will 'pay attention' to the already generated words when generating
+
 $$ P(w_i  | w_1..w_{i-1}) $$ 
+
 The equation for a self-attention head effectively becomes
+
 $$ SelfAttention(Q, Q, V) = softmax(\frac{QQ^T}{\sqrt{d_k}})V $$
 
 And the Multi-headed attention
+
 $$ MultiHead(Q, Q, V ) = Concat(head_1, ..., head_h)W_O $$
 
 ### Different models, tested
@@ -159,116 +170,208 @@ The first model was trained to only generate verses, whereas all other models we
 | V4    | 4               | 256           | 256          | 64               | 0.6 \| 0.6 \| 0.7                |
 | V5    | 5               | 280           | 256          | 56               | 0.6 \| 0.6 \| 0.7                |
 
+
 Models are evaluated using [Perplexity (PPL)](https://medium.com/@priyankads/perplexity-of-language-models-41160427ed72) which is computed on both the training set and the cross-validation set.
+
 ![enter image description here](https://i.imgur.com/lJcTjED.png)
 
 By default, the transformer uses a vector of size dk for the **Q** and **V** values, determined as follows
+
 $$ d_k = d_v = \frac{d_{embeddings}}{h}  $$
+
 where h is the amount of attention heads. I've found that using too many attention heads (*models 2 & 3*) generally yields worse results, due to the bottleneck created by the small hidden state vector. I've found that the sweet spot for 
+
 $$ d_{embeddings} \in [256; 300] $$
+
 and for
+
 $$ h \in [4;5] $$
 
-After the final FC layer, i use [Top P sampling](https://www.ibm.com/docs/en/watsonx-as-a-service?topic=lab-prompt-parameters) for the next token generation. I found that with $$ p \in [0.80; 0.85]$$ i get the funniest / most creative generations.
+After the final FC layer, i use [Top P sampling](https://www.ibm.com/docs/en/watsonx-as-a-service?topic=lab-prompt-parameters) for the next token generation. I found that with 
+
+$$ p \in [0.80; 0.85]$$ 
+
+i get the funniest / most creative generations.
 
 
 Top P works by finding the least amount of tokens, such that
+
 $$ \sum_i{P(w_i |context) > p} $$
 
 and then samples from the new token distribution
 ## Some generations
 
 като на любов играеш си как мирише на твойта кожа, 
+
  и тя дори и да сме с теб, 
+ 
  без да криеш любовта ни пред хората 
+ 
  и аз да спирам рано в седем дни. 
+ 
  няма да те имам. 
+ 
  да съм запукам в клевикаш няма скука, от купони ще те гукам 
+ 
  бръмбарите в моята глава полудяха 
+ 
  ще ти правя пеперуди във стомаха 
+ 
  ако трябва ще те спирам рано в седем дни 
+ 
  ще те спирам рано в седем дни 
+ 
  обещавам да не спирам рано в седем нощи аз 
+ 
  с вкус на мода 
+ 
  бръмбарите в морето луната като ги омпителната жертва ти ми даваш любовта ни. 
+ 
  ще те взимам навсякъде и ще говоря 
+ 
  ще ти спирам рано в седем дни. 
+ 
  ще те целувам, ще те спирам рано в седем нощи специпчата и ще те бръмбарите в твойта глава полудяха 
+ 
  ще ти правя пеперуди във стомаха 
+ 
  всичките пари вътре 
 
 -------------------
-в мен какво би? 
+в мен какво би?
+
  имам всичко да ти дам да ти дам да ме слеят две сърца. 
+ 
  всеки миг живот боли, 
+ 
  но едва. 
+ 
  но какво сега от това, 
+ 
  как да вярвам, 
+ 
  боли да ме боли 
+ 
  дано обичаш да страдаш ти, 
+ 
  дано щастлива с него да станеш луда 
+ 
  дано обичаш да страдаш ти. 
+ 
  дано на теб да се превърна, 
+ 
  дано на мен да си плащаш за греха. 
+ 
  дано на теб да ти дам да се влюбиш дано на мен 
+ 
  дано на тебе да се влюбиш дано на тебе да мечтаеш. 
+ 
  но да забравиш, да ама с мене. 
  дано на тебе да полудеем, 
+ 
  дано на тебе да съм щастлива. 
+ 
  дано на тебе да боли, 
+ 
  дано на тебе да останеш 
+ 
  дано на тебе да страдаш ти, 
+ 
  дано на тебе да обичаш да страдаш ти? 
+ 
  дано на тебе да видиш ти. 
+ 
  дано на тебе да
 
 -----
  как ли ти стои? 
+ 
  ето ме да ме спреш да ме спреш. 
+ 
  с тебе тръгвам навсякъде да видя? 
+ 
  всичко мое, искам, искам всичко да е до мен 
+ 
  и как го направя? 
+ 
  защо да живеем двама, 
+ 
  сякаш просто няма да сме заедно? 
+ 
  всичко води към мене. 
+ 
  пия, скитам се да избягам, но накъде. 
+ 
  но ще избягам, аз не мога да избягам, не мога да избягам. 
+ 
  тръгвам си от теб 
+ 
  нищо друго не казвай 
+ 
  че ме лъжеш ти. 
+ 
  без тебе тръгвам си да избягам, но накъде 
+ 
  обичам да избягам, там където искаш да се сбогувам 
+ 
  не си с друг живот да се сбогувам 
+ 
  любовта да избягам, знам това е.
 
 
 ----
 зарежда ти. 
+
  какво ми става? 
+ 
  най-добрия във града, 
+ 
  за секунда ако можеш, с мене си сега. 
+ 
  и секунда ако хвана с пари. 
+ 
  готов съм, с мене, 
+ 
  а после пак ще останеш за любов. 
+ 
  да те отпробваме! 
+ 
  щом за тази вечер поршето? 
+ 
  щом отново си от тогава 
+ 
  все едно не прощава, 
+ 
  дори не се преборотен 
+ 
  твоя съм сега, 
+ 
  ще ми го чуеш танцувай с мен, 
+ 
  нали ме сваляш, а всеки път тежки стъпки чуя, 
+ 
  аз виждам, а да видя бърза, то, 
+ 
  не ме вълнуваш, 
+ 
  сега до края, 
+ 
  и с нея ти не се преборих. 
+ 
  когато съмнения прошепвай, 
+ 
  но сърцето ми, 
+ 
  колкото си тръгнеш, 
+ 
  всеки ден, всяка нощ. 
+ 
  дай ръка, където 
+ 
  да си до мене, 
+ 
  тогава се изпрати, 
+ 
  в съня, щом си на нея.
 
 ## Conclusion
