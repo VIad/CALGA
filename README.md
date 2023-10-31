@@ -10,6 +10,14 @@ Our investigation focuses on evaluating the quality of generated lyrics and the 
 
 The results of our evaluation offer valuable insights into the strengths and weaknesses of different transformer architectures when applied to creative text generation. This research contributes to our understanding of the state-of-the-art in lyrics generation and provides guidance for selecting the most suitable transformer-based model for specific creative and linguistic applications, advancing the field of natural language generation.
 
+## Table of contents
+- [Requirements](#introduction)
+- [The Plan](#the-plan)
+- [The Dataset](#the-dataset)
+- [EDA](#eda)
+- [Modelling](#modelling)
+- [Some generations](#some-generations)
+- [Conclusion](#conclusion)
 
 ## Introduction
 This project is inspired by [@Kyosek/text-generator-Krisko](https://github.com/kyosek/text-generator-Krisko)
