@@ -28,9 +28,9 @@ It is futile to attempt to statistically model what takes great creativity and l
 and because of the numerous Phraseme and genre-unique word semantics.
 
 A few examples are:
-Щибиди доп доп
-Щрак
-рак так так
+Щибиди доп доп<br />
+Щрак<br />
+рак так так<br />
 ## The Plan
 Kyosek utilizes a [Bidirectional Long Short term memory architecture](https://analyticsindiamag.com/complete-guide-to-bidirectional-lstm-with-python-codes/) for his Krisko lyrics generations. He generates single sentences.
 
