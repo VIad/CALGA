@@ -34,7 +34,7 @@ A few examples are:
 ## The Plan
 Kyosek utilizes a [Bidirectional Long Short term memory architecture](https://analyticsindiamag.com/complete-guide-to-bidirectional-lstm-with-python-codes/) for his Krisko lyrics generations. He generates single sentences.
 
-In this project, we'll utilize the power of the newer [Transformer architecture](https://arxiv.org/abs/1706.03762). Addditionally, we'll attempt to generate full-length songs, in hopes of trying to capture and model some of the rhyming traditionally found in Bulgarian Pop-folk.
+In this project, we'll utilize the power of the newer [Transformer architecture](https://arxiv.org/abs/1706.03762). Additionally, we'll attempt to generate full-length songs, in hopes of trying to capture and model some of the rhyming traditionally found in Bulgarian Pop-folk.
 
 To do that, we need a couple of things first
 1. The dataset
